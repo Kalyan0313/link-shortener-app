@@ -137,47 +137,49 @@ export default function Dashboard() {
         )}
 
         {!loading && !error && links.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                <th>Short Code</th>
-                <th>Target URL</th>
-                <th>Clicks</th>
-                <th>Last Clicked</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {links.map((link) => (
-                <tr key={link.id}>
-                  <td>
-                    <Link to={`/code/${link.shortCode}`} className="code-link">
-                      {link.shortCode}
-                    </Link>
-                  </td>
-                  <td className="url-cell" title={link.targetUrl}>
-                    {link.targetUrl}
-                  </td>
-                  <td>{link.totalClicks}</td>
-                  <td>{formatDate(link.lastClicked)}</td>
-                  <td>
-                    <button
-                      onClick={() => copyToClipboard(link.shortCode)}
-                      className="btn-small"
-                    >
-                      Copy
-                    </button>
-                    <button
-                      onClick={() => handleDelete(link.shortCode)}
-                      className="btn-small btn-danger"
-                    >
-                      Delete
-                    </button>
-                  </td>
+          <div className="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Short Code</th>
+                  <th>Target URL</th>
+                  <th>Clicks</th>
+                  <th>Last Clicked</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {links.map((link) => (
+                  <tr key={link.id}>
+                    <td>
+                      <Link to={`/code/${link.shortCode}`} className="code-link">
+                        {link.shortCode}
+                      </Link>
+                    </td>
+                    <td className="url-cell" title={link.targetUrl}>
+                      {link.targetUrl}
+                    </td>
+                    <td>{link.totalClicks}</td>
+                    <td>{formatDate(link.lastClicked)}</td>
+                    <td>
+                      <button
+                        onClick={() => copyToClipboard(link.shortCode)}
+                        className="btn-small"
+                      >
+                        Copy
+                      </button>
+                      <button
+                        onClick={() => handleDelete(link.shortCode)}
+                        className="btn-small btn-danger"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
