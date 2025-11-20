@@ -8,21 +8,32 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const [targetUrl, setTargetUrl] = useState("");
   const [customCode, setCustomCode] = useState("");
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  // Load links when debounced search changes
   useEffect(() => {
     loadLinks();
-  }, [search]);
+  }, [debouncedSearch]);
 
   const loadLinks = async () => {
     try {
       setLoading(true);
       setError("");
-      const data = await api.fetchLinks(search);
+      const data = await api.fetchLinks(debouncedSearch);
       setLinks(data.data.links || []);
     } catch (err) {
       console.error("error in fetching links", err);
