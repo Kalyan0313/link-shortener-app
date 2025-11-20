@@ -68,7 +68,8 @@ export default function Dashboard() {
   };
 
   const copyToClipboard = (code) => {
-    const url = `http://localhost:5000/${code}`;
+    const backendUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    const url = `${backendUrl}/${code}`;
     navigator.clipboard.writeText(url);
     toast.success('Copied to clipboard!');
   };
